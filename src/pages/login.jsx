@@ -1,9 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router'
-import { toast } from 'sonner'
 import { z } from 'zod'
 
 import PasswordInput from '@/components/password-input'
@@ -25,7 +23,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { api } from '@/lib/axios'
+import { AuthContext } from '@/contexts/auth'
 
 const loginSchema = z.object({
   email: z
@@ -40,18 +38,6 @@ const loginSchema = z.object({
 })
 
 const LoginPage = () => {
-  const loginMutation = useMutation({
-    mutationKey: ['login'],
-    mutationFn: async (variables) => {
-      const response = await api.post('/users', {
-        first_name: variables.firstName,
-        last_name: variables.lastName,
-        email: variables.email,
-        password: variables.password,
-      })
-      return response.data
-    },
-  })
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -60,45 +46,11 @@ const LoginPage = () => {
     },
   })
 
-  const [user, setUser] = useState(null)
-
-  useEffect(() => {
-    const init = async () => {
-      try {
-        const accessToken = localStorage.getItem('accessToken')
-        const refreshToken = localStorage.getItem('refreshToken')
-        if (!accessToken && !refreshToken) return
-        const response = await api.get('/users/me', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        })
-        setUser(response.data)
-      } catch (error) {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('refreshToken')
-        console.error(error)
-      }
-    }
-    init()
-  }, [])
+  const { user, login } = useContext(AuthContext)
 
   const handleSubmit = (data) => {
     console.log(data)
-    loginMutation.mutate(data, {
-      onSuccess: (loggedUser) => {
-        const accessToken = loggedUser.tokens.accessToken
-        const refreshToken = loggedUser.tokens.refreshToken
-        localStorage.setItem('accessToken', accessToken)
-        localStorage.setItem('refreshToken', refreshToken)
-        setUser(loggedUser)
-        toast.success('Usuário logado com sucesso!')
-      },
-      onError: (error) => {
-        console.log(error)
-        toast.error('E-mail ou senha inválidos')
-      },
-    })
+    login(data)
   }
 
   if (user) {
