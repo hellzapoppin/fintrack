@@ -40,6 +40,18 @@ const loginSchema = z.object({
 })
 
 const LoginPage = () => {
+  const loginMutation = useMutation({
+    mutationKey: ['login'],
+    mutationFn: async (variables) => {
+      const response = await api.post('/users', {
+        first_name: variables.firstName,
+        last_name: variables.lastName,
+        email: variables.email,
+        password: variables.password,
+      })
+      return response.data
+    },
+  })
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -49,17 +61,6 @@ const LoginPage = () => {
   })
 
   const [user, setUser] = useState(null)
-
-  const loginMutation = useMutation({
-    mutationKey: ['login'],
-    mutationFn: async (variables) => {
-      const response = await api.post('/users/login', {
-        email: variables.email,
-        password: variables.password,
-      })
-      return response.data
-    },
-  })
 
   useEffect(() => {
     const init = async () => {
