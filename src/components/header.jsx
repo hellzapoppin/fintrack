@@ -27,7 +27,7 @@ const Header = () => {
         </div>
         <div>
           <DropdownMenu>
-            <DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>
               <Button variant="outline" className="space-x-1">
                 <Avatar className="h-7 w-7">
                   <AvatarImage src={getUserAvatarUrl(user.email)} />
