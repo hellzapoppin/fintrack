@@ -8,18 +8,42 @@ export const UserService = {
       email: inputs.email,
       password: inputs.password,
     })
-    return response.data
+
+    return {
+      id: response.data.id,
+      firstName: response.data.first_name,
+      lastName: response.data.last_name,
+      email: response.data.email,
+      password: response.data.password,
+      tokens: response.data.tokens,
+    }
   },
+
   login: async (inputs) => {
     const response = await publicApi.post('/users/login', {
       email: inputs.email,
       password: inputs.password,
     })
 
-    return response.data
+    return {
+      id: response.data.id,
+      firstName: response.data.first_name,
+      lastName: response.data.last_name,
+      email: response.data.email,
+      password: response.data.password,
+      tokens: response.data.tokens,
+    }
   },
+
   me: async () => {
     const response = await protectedApi.get('/users/me')
-    return response.data
+
+    return {
+      id: response.data.id,
+      firstName: response.data.first_name,
+      lastName: response.data.last_name,
+      email: response.data.email,
+      password: response.data.password,
+    }
   },
 }
