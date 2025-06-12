@@ -48,7 +48,6 @@ const LoginPage = () => {
   const { user, login, isInitializing } = useAuthContext()
 
   const handleSubmit = (data) => {
-    console.log(data)
     login(data)
   }
 
@@ -87,7 +86,7 @@ const LoginPage = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Senha</FormLabel>
                     <FormControl>
                       <PasswordInput
                         placeholder="Digite sua senha"
@@ -100,7 +99,7 @@ const LoginPage = () => {
               ></FormField>
             </CardContent>
             <CardFooter>
-              <Button className="w-full">Fazer loin</Button>
+              <Button className="w-full">Fazer login</Button>
             </CardFooter>
           </Card>
         </form>
