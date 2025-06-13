@@ -22,6 +22,10 @@ const Balance = () => {
     queryFn: () => {
       return UserService.balance({ from, to })
     },
+    //por padrão o valor é 0 (fica sempre como status "stale" no react-query-devtools, ou seja, sempre que o usuário mudar de aba a query será refeita)
+    //alterando o valor, a query ficará com status "fresh" até que o tempo expire
+    staleTime: 1000 * 60 * 5, // 5 minutos
+    enabled: Boolean(from) && Boolean(to) && Boolean(user.id),
   })
 
   return (
