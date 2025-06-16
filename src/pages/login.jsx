@@ -80,8 +80,8 @@ const LoginPage = () => {
               ></FormField>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" disabled={form.formState.isSubmitted}>
-                {form.formState.isSubmitted && (
+              <Button className="w-full" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting && (
                   <Loader2Icon className="animate-spin" />
                 )}
                 Fazer login
