@@ -2,7 +2,7 @@ import { ChevronDownIcon, LogOutIcon } from 'lucide-react'
 
 import logo from '@/assets/images/logo.svg'
 import { useAuthContext } from '@/contexts/auth'
-import { getUserAvatarUrl } from '@/helpers/user'
+import { getUserAvatarUrl } from '@/helpers/gravatar'
 
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'

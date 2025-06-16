@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router'
 
 import { useAuthContext } from '@/contexts/auth'
-import { formatDateToQueryParams } from '@/helpers/user'
+import { formatDateToQueryParams } from '@/helpers/gravatar'
 
 import DatePickerWithRange from './ui/date-picker-with-range'
 
